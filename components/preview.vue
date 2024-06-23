@@ -1,22 +1,32 @@
 <template>
   <div>
-    <div ref="canvasWrapper"/>
+    <div
+      ref="canvasWrapper"
+      class="[&>canvas]:w-[70vw]"
+    />
   </div>
 </template>
 
 <script setup lang="js">
-import { Application } from 'pixi.js'
+import { Application, Graphics } from 'pixi.js'
 
 const canvasWrapper = ref(null)
 
-const { app } = usePixi()
+const { app, background } = usePixi()
 const { settings } = useSettings()
 const { isFfmpegExecuting, renderFrame } = useRender()
 
 onMounted(async () => {
   app.value = new Application()
-  await app.value.init({ preserveDrawingBuffer: true })
+  await app.value.init({ width: settings.value.width, height: settings.value.height, preserveDrawingBuffer: true })
   canvasWrapper.value.appendChild(app.value.canvas)
+
+  const graphics = new Graphics()
+  app.value.stage.addChild(graphics)
+  background.value = graphics
+  graphics.zIndex = -1
+  graphics.rect(0, 0, settings.value.width, settings.value.height)
+  graphics.fill(settings.value.backgroundColor)
 
   window.sprites = []
   step()

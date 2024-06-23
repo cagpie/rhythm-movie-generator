@@ -1,6 +1,4 @@
 import { ref } from 'vue'
-import { useExpressions } from './useExpression'
-import { useParts } from './useParts'
 
 const { expressions } = useExpressions()
 const { parts } = useParts()
@@ -26,7 +24,11 @@ const applyEffect = (path, part, timing) => {
   let value = path.reduce((obj, current) => obj[current], part)
 
   part.expressions.forEach((partExp) => {
-    const exp = expressions.find(exp => exp.name === partExp)
+    if (!partExp.enabled) {
+      return
+    }
+
+    const exp = expressions.find(exp => exp.name === partExp.name)
 
     if (!exp) {
       return
@@ -38,7 +40,15 @@ const applyEffect = (path, part, timing) => {
       return
     }
 
-    value = func(value, timing)
+    // ここでいちいちJSON.parseするせいで多分結構遅くなる
+    const options = (() => {
+      try {
+        return JSON.parse(partExp.options)
+      }
+      catch {}
+      return {}
+    })()
+    value = func(value, timing, options)
   })
 
   return value

@@ -1,9 +1,12 @@
 import { ref } from 'vue'
 
 const settings = ref({
-  bpm: 150,
+  width: 1280,
+  height: 720,
   fps: 30,
+  bpm: 150,
   length: 8,
+  backgroundColor: '0x003388',
 })
 
 export function useSettings() {

@@ -62,8 +62,8 @@ onChange((files) => {
           x: 0.5,
           y: 0.5,
         },
-        zIndex: parts.value.length * 100,
-        expressions: [],
+        zIndex: 1000 + parts.value.length * 100,
+        expressions: [{ name: '', options: '{}', enabled: true }],
       })
 
       // Nuxtのreactiveの中に入れると壊れるのでグローバルに入れて扱う
