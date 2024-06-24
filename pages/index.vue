@@ -1,6 +1,13 @@
 <template>
   <div class='w-full border'>
     <div class="flex">
+      <h1 class="text-4xl font-bold">Rhythm Movie Generator</h1>
+      <div class="flex ml-4">
+        <project-load />
+        <project-save />
+      </div>
+    </div>
+    <div class="flex">
       <div>
         <ClientOnly>
           <preview />
@@ -8,8 +15,6 @@
       </div>
       <div class="ml-2">
         <settings />
-        <project-save />
-        <project-load />
         <file-loader
           class="mt-2"
         />

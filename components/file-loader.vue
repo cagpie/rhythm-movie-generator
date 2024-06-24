@@ -5,7 +5,7 @@
       type="button"
       @click="open"
     >
-      Add file
+      Add Image File
     </button>
     <div v-if="isLoading">loading</div>
   </div>
@@ -19,6 +19,7 @@ const { app } = usePixi()
 const { parts } = useParts()
 
 const { open, onChange } = useFileDialog({
+  accept: 'image.*',
   directory: false,
 })
 
