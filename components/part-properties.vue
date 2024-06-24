@@ -5,9 +5,14 @@
         class="[&>dt]:font-bold [&dd>]:col-span-2 [&>div]:grid [&>div]:grid-cols-3"
       >
         <div>
-          <dt>名前</dt>
+          <dt>ファイル</dt>
           <dd>
-            <input v-model="part.name" type="text">
+            <button
+              @click="open"
+            >
+              {{ part.name }}
+            </button>
+            <div v-if="isLoading">loading</div>
           </dd>
         </div>
         <div>
@@ -80,7 +85,8 @@
 </template>
 
 <script setup lang="js">
-const { expressions } = useExpressions()
+import * as PIXI from 'pixi.js'
+import { useFileDialog } from '@vueuse/core'
 
 const { part } = defineProps({
   part: {
@@ -90,6 +96,13 @@ const { part } = defineProps({
 })
 
 const expressionsCount = ref(part.expressions.length)
+const { expressions } = useExpressions()
+
+const isLoading = ref(false)
+const { open, onChange } = useFileDialog({
+  accept: 'image.*',
+  directory: false,
+})
 
 const addExpression = () => {
   expressionsCount.value++
@@ -99,5 +112,35 @@ const addExpression = () => {
 const initExpressionOptions = (expression) => {
   expression.options = expressions.find(e => e.type === expression.type).defaultOptions
 }
+
+onChange((files) => {
+  isLoading.value = true
+
+  const fileData = files[0]
+
+  if (!fileData.type.match('image.*')) {
+    alert('画像を選択してください')
+    isLoading.value = false
+    return
+  }
+
+  const reader = new FileReader()
+  reader.onload = () => {
+    const image = new Image()
+    image.src = reader.result
+
+    image.onload = async () => {
+      const texture = PIXI.Texture.from(image)
+
+      part.name = fileData.name
+      part.base64 = reader.result
+
+      window.sprites.find(s => s.appUniqueKey === part.key).texture = texture
+
+      isLoading.value = false
+    }
+  }
+  reader.readAsDataURL(fileData)
+})
 
 </script>
