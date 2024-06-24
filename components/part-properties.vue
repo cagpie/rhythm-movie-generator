@@ -29,6 +29,12 @@
           </dd>
         </div>
         <div>
+          <dt>rotation</dt>
+          <dd>
+            <input v-model="part.rotation" type="number">
+          </dd>
+        </div>
+        <div>
           <dt>scale x</dt>
           <dd>
             <input v-model="part.scale.x" type="number">
@@ -56,9 +62,9 @@
           <dt>expressions</dt>
           <dd>
             <template v-for="i in expressionsCount" :key="i" >
-              <select v-model="part.expressions[i - 1].name" @change="initExpressionOptions(part.expressions[i - 1])">
+              <select v-model="part.expressions[i - 1].type" @change="initExpressionOptions(part.expressions[i - 1])">
                 <option value="">-</option>
-                <option v-for="expression in expressions" :key="expression.name" :value="expression.name">
+                <option v-for="expression in expressions" :key="expression.type" :value="expression.type">
                   {{ expression.name }}
                 </option>
               </select>
@@ -87,11 +93,11 @@ const expressionsCount = ref(1)
 
 const addExpression = () => {
   expressionsCount.value++
-  part.expressions.push({ name: '', options: '{}', enabled: true })
+  part.expressions.push({ type: '', options: '{}', enabled: true })
 }
 
 const initExpressionOptions = (expression) => {
-  expression.options = expressions.find(e => e.name === expression.name).defaultOptions
+  expression.options = expressions.find(e => e.type === expression.type).defaultOptions
 }
 
 </script>

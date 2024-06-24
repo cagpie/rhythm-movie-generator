@@ -10,17 +10,18 @@ const renderFrame = (timing) => {
     // nuxtに入れるとreactiveでぶっ壊れるのでglobal経由で取得
     const sprite = window.sprites.find(s => s.appUniqueKey === part.key)
 
-    sprite.x = applyEffect(['position', 'x'], part, timing)
-    sprite.y = applyEffect(['position', 'y'], part, timing)
-    sprite.scale.x = applyEffect(['scale', 'x'], part, timing)
-    sprite.scale.y = applyEffect(['scale', 'y'], part, timing)
+    sprite.x = applyExpression(['position', 'x'], part, timing)
+    sprite.y = applyExpression(['position', 'y'], part, timing)
+    sprite.rotation = applyExpression(['rotation'], part, timing)
+    sprite.scale.x = applyExpression(['scale', 'x'], part, timing)
+    sprite.scale.y = applyExpression(['scale', 'y'], part, timing)
     sprite.anchor.x = part.anchor.x
     sprite.anchor.y = part.anchor.y
     sprite.zIndex = part.zIndex
   })
 }
 
-const applyEffect = (path, part, timing) => {
+const applyExpression = (path, part, timing) => {
   let value = path.reduce((obj, current) => obj[current], part)
 
   part.expressions.forEach((partExp) => {
@@ -28,7 +29,7 @@ const applyEffect = (path, part, timing) => {
       return
     }
 
-    const exp = expressions.find(exp => exp.name === partExp.name)
+    const exp = expressions.find(exp => exp.type === partExp.type)
 
     if (!exp) {
       return

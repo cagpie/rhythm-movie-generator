@@ -42,7 +42,7 @@ const step = () => {
   }
 
   // previewの再生時点はDate.now()を基点に計算する
-  const timing = (Date.now() % (((60 / settings.value.bpm) * 1000) * settings.value.length)) / ((60 / settings.value.bpm) * 1000)
+  const timing = (Date.now() % (((60 / settings.value.bpm) * 1000) * settings.value.duration)) / ((60 / settings.value.bpm) * 1000)
 
   renderFrame(timing)
   app.value.render()

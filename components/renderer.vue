@@ -48,7 +48,7 @@ const render = async () => {
 
   const images = []
 
-  const totalFrames = (60 / settings.value.bpm) * settings.value.fps * settings.value.length
+  const totalFrames = (60 / settings.value.bpm) * settings.value.fps * settings.value.duration
   log.value.push(`sys: total frames: ${totalFrames}`)
   log.value.push('sys: render images')
 

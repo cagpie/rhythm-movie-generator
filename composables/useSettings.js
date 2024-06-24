@@ -5,7 +5,7 @@ const settings = ref({
   height: 720,
   fps: 30,
   bpm: 150,
-  length: 8,
+  duration: 8,
   backgroundColor: '0x003388',
 })
 

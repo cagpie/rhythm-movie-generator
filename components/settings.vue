@@ -17,9 +17,9 @@
           </dd>
         </div>
         <div>
-          <dt>length</dt>
+          <dt>duration</dt>
           <dd>
-            <input v-model="settings.length" type="number">
+            <input v-model="settings.duration" type="number">
           </dd>
         </div>
         <div>

@@ -47,9 +47,9 @@ onChange((files) => {
 
       parts.value.push({
         key: key,
-        image: image,
         // sprite: sprite, // なんか循環参照になってここに追加できん😇
         name: fileData.name,
+        base64: reader.result,
         position: {
           x: 300,
           y: 300,
@@ -62,8 +62,9 @@ onChange((files) => {
           x: 0.5,
           y: 0.5,
         },
-        zIndex: 1000 + parts.value.length * 100,
-        expressions: [{ name: '', options: '{}', enabled: true }],
+        rotation: 0,
+        zIndex: 1000 + parts.value.duration * 100,
+        expressions: [{ type: '', options: '{}', enabled: true }],
       })
 
       // Nuxtのreactiveの中に入れると壊れるのでグローバルに入れて扱う

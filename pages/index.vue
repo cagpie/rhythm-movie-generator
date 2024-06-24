@@ -8,6 +8,8 @@
       </div>
       <div class="ml-2">
         <settings />
+        <project-save />
+        <project-load />
         <file-loader
           class="mt-2"
         />
