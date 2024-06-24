@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="relative h-full">
     <div
       ref="canvasWrapper"
-      class="[&>canvas]:w-[70vw]"
+      class="[&>canvas]:w-[70vw] sticky top-0"
     />
   </div>
 </template>

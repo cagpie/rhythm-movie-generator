@@ -1,10 +1,16 @@
 <template>
-  <div>
+  <div class="grid grid-cols-2 gap-2">
     <button
       type="button"
       @click="load('demo1.json')"
     >
       デモ1
+    </button>
+    <button
+      type="button"
+      @click="load('demo2.json')"
+    >
+      デモ2
     </button>
     <div v-if="isLoading">loading</div>
   </div>
