@@ -5,61 +5,61 @@
         class="[&>dt]:font-bold [&dd>]:col-span-2 [&>div]:grid [&>div]:grid-cols-3"
       >
         <div>
-          <dt>name</dt>
+          <dt>名前</dt>
           <dd>
             <input v-model="part.name" type="text">
           </dd>
         </div>
         <div>
-          <dt>x</dt>
+          <dt>X</dt>
           <dd>
             <input v-model="part.position.x" type="number">
           </dd>
         </div>
         <div>
-          <dt>y</dt>
+          <dt>Y</dt>
           <dd>
             <input v-model="part.position.y" type="number">
           </dd>
         </div>
         <div>
-          <dt>zIndex</dt>
+          <dt>Z</dt>
           <dd>
             <input v-model="part.zIndex" type="number">
           </dd>
         </div>
         <div>
-          <dt>rotation</dt>
+          <dt>回転</dt>
           <dd>
             <input v-model="part.rotation" type="number">
           </dd>
         </div>
         <div>
-          <dt>scale x</dt>
+          <dt>拡大X</dt>
           <dd>
             <input v-model="part.scale.x" type="number">
           </dd>
         </div>
         <div>
-          <dt>scale y</dt>
+          <dt>拡大Y</dt>
           <dd>
             <input v-model="part.scale.y" type="number">
           </dd>
         </div>
         <div>
-          <dt>anchor x</dt>
+          <dt>原点X</dt>
           <dd>
             <input v-model="part.anchor.x" type="number">
           </dd>
         </div>
         <div>
-          <dt>anchor y</dt>
+          <dt>原点Y</dt>
           <dd>
             <input v-model="part.anchor.y" type="number">
           </dd>
         </div>
         <div>
-          <dt>expressions</dt>
+          <dt>動き</dt>
           <dd>
             <template v-for="i in expressionsCount" :key="i" >
               <select v-model="part.expressions[i - 1].type" @change="initExpressionOptions(part.expressions[i - 1])">
@@ -71,7 +71,7 @@
               <input v-model="part.expressions[i - 1].enabled" type="checkbox" >
               <input v-model="part.expressions[i - 1].options" type="text">
             </template>
-            <button @click="addExpression">+</button>
+            <button @click="addExpression">[追加]</button>
           </dd>
         </div>
       </dl>
@@ -89,7 +89,7 @@ const { part } = defineProps({
   },
 })
 
-const expressionsCount = ref(1)
+const expressionsCount = ref(part.expressions.length)
 
 const addExpression = () => {
   expressionsCount.value++

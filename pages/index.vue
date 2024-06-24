@@ -6,6 +6,9 @@
         <project-load />
         <project-save />
       </div>
+      <div class="flex ml-4">
+        <demos />
+      </div>
     </div>
     <div class="flex">
       <div>

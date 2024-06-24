@@ -5,7 +5,7 @@
       type="button"
       @click="open"
     >
-      Add Image File
+      画像追加
     </button>
     <div v-if="isLoading">loading</div>
   </div>

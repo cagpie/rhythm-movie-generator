@@ -5,19 +5,16 @@
       type="button"
       @click="open"
     >
-      Load
+      読込
     </button>
     <div v-if="isLoading">loading</div>
   </div>
 </template>
 
 <script setup lang="js">
-import * as PIXI from 'pixi.js'
 import { useFileDialog } from '@vueuse/core'
 
-const { app } = usePixi()
-const { parts } = useParts()
-const { settings } = useSettings()
+const { loadProject } = useProjectLoader()
 
 const { open, onChange } = useFileDialog({
   accept: 'application/json',
@@ -40,37 +37,10 @@ onChange((files) => {
   const reader = new FileReader()
   reader.onload = () => {
     const json = JSON.parse(reader.result)
-    console.log(json)
 
-    if (json.version !== 'rythm-movie-generator-v1') {
-      alert('対応していないバージョンのファイルです')
-      isLoading.value = false
-      return
-    }
+    loadProject(json)
 
-    Object.keys(json.settings).forEach((key) => {
-      settings.value[key] = json.settings[key]
-    })
-
-    json.parts.forEach((part) => {
-      const image = new Image()
-      image.src = part.base64
-
-      image.onload = async () => {
-        const key = part.key
-        const sprite = new PIXI.Sprite(PIXI.Texture.from(image))
-        sprite.appUniqueKey = key
-
-        parts.value.push(part)
-
-        // Nuxtのreactiveの中に入れると壊れるのでグローバルに入れて扱う
-        window.sprites.push(sprite)
-
-        app.value.stage.addChild(sprite)
-
-        isLoading.value = false
-      }
-    })
+    isLoading.value = false
   }
   reader.readAsText(fileData)
 })
