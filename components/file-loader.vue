@@ -64,7 +64,7 @@ onChange((files) => {
           y: 0.5,
         },
         rotation: 0,
-        zIndex: 1000 + parts.value.duration * 100,
+        zIndex: 1000 + parts.value.length * 100,
         expressions: [{ type: '', options: '{}', enabled: true }],
       })
 
