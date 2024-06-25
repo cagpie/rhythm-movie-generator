@@ -1,11 +1,31 @@
 <template>
-  <div v-show="isFfmpegLoaded">
-    <button
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      type="button"
-      @click="render"
-    >Render</button>
-    <video controls  :src="videoSrc" />
+  <div class="border p-2">
+    <div v-show="isFfmpegLoaded">
+      <button
+        v-if="!isFfmpegExecuting"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 w-full"
+        type="button"
+        @click="render"
+      >
+        動画を書き出し
+      </button>
+      <div
+        v-else
+        class="text-white bg-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+      >
+        動画を書き出し中
+      </div>
+      <div v-show="videoSrc">
+        <p class="text-sm">▼ 右クリックから動画を保存できます</p>
+        <video controls :src="videoSrc" />
+      </div>
+      <p v-if="!videoSrc" class="text-gray-500">
+        ここに動画が表示されます
+      </p>
+    </div>
+    <p v-if="!isFfmpegLoaded" class="text-gray-500">
+      ロード中です
+    </p>
   </div>
 </template>
 
@@ -71,6 +91,8 @@ const render = async () => {
 
   const blob = new Blob([video], { type: 'video/mp4' })
   videoSrc.value = URL.createObjectURL(blob)
+
+  log.value.push('sys: set video done')
 
   isFfmpegExecuting.value = false
 }

@@ -10,6 +10,20 @@ const loadProject = (json) => {
     return false
   }
 
+  if (parts.value.length) {
+    if (!confirm('現在の内容を破棄しますがよろしいですか？')) {
+      return false
+    }
+
+    parts.value.forEach((part) => {
+      const sprite = window.sprites.find(s => s.appUniqueKey === part.key)
+      app.value.stage.removeChild(sprite)
+    })
+
+    window.sprites = []
+    parts.value = []
+  }
+
   Object.keys(json.settings).forEach((key) => {
     settings.value[key] = json.settings[key]
   })

@@ -3,11 +3,10 @@ import vue from '@vitejs/plugin-vue'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@vueuse/nuxt',
-    '@nuxt/eslint',
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt', '@nuxt/eslint', 'nuxt-svgo'],
+  svgo: {
+    autoImportPath: './assets/other-icons/',
+  },
   vite: {
     optimizeDeps: {
       exclude: ['@ffmpeg/ffmpeg'],

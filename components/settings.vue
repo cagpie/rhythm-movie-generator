@@ -1,31 +1,44 @@
 <template>
-  <div>
-    <div class="border">
+  <div class="border p-2">
+    <p class="text-xl">設定</p>
+    <div>
       <dl
-        class="[&>dt]:font-bold [&dd>]:col-span-2 [&>div]:grid [&>div]:grid-cols-3"
+      class="mt-2 [&>div]:grid [&>div]:grid-cols-4 [&>div]:mt-1 [&>div>dt]:text-gray-500 [&>div>dd]:col-span-3"
       >
         <div>
-          <dt>bpm</dt>
+          <dt>BPM</dt>
           <dd>
-            <input v-model="settings.bpm" type="number">
+            <div class="input-with-title">
+              <div/>
+              <input v-model="settings.bpm" type="number">
+            </div>
           </dd>
         </div>
         <div>
-          <dt>fps</dt>
+          <dt>FPS</dt>
           <dd>
-            <input v-model="settings.fps" type="number">
+            <div class="input-with-title">
+              <div/>
+              <input v-model="settings.fps" type="number">
+            </div>
           </dd>
         </div>
         <div>
-          <dt>duration</dt>
+          <dt>長さ</dt>
           <dd>
-            <input v-model="settings.duration" type="number">
+            <div class="input-with-title">
+              <div/>
+              <input v-model="settings.duration" type="number">
+            </div>
           </dd>
         </div>
         <div>
-          <dt>bgcolor</dt>
+          <dt>背景色</dt>
           <dd>
-            <input v-model="settings.backgroundColor" type="text">
+            <div class="input-with-title">
+              <div/>
+              <input v-model="settings.backgroundColor" type="text">
+            </div>
           </dd>
         </div>
       </dl>
@@ -45,3 +58,7 @@ watch(() => settings.value.backgroundColor, (value) => {
   }
 })
 </script>
+
+<style>
+/* part-propertiesのCSSが貫通しているので設定してない */
+</style>

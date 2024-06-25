@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <template v-for="part in parts" :key="part.key">
-      <part-properties :part="part" />
-    </template>
+  <div class="grid gap-2">
+    <part-properties
+      v-for="part in parts"
+      v-show="part.listing"
+      :key="part.key"
+      :part="part"
+    />
   </div>
 </template>
 

@@ -34,4 +34,10 @@ const load = (fileName) => {
       isLoading.value = false
     })
 }
+
+if (window?.location) {
+  setTimeout(() => {
+    load('demo1.json')
+  }, 1000)
+}
 </script>

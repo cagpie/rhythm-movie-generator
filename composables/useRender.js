@@ -18,6 +18,7 @@ const renderFrame = (timing) => {
     sprite.anchor.x = part.anchor.x
     sprite.anchor.y = part.anchor.y
     sprite.zIndex = part.zIndex
+    sprite.visible = part.visible
   })
 }
 
