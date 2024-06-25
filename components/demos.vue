@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-2">
+  <div class="grid grid-cols-3 gap-2">
     <button
       type="button"
       @click="load('demo1.json')"
@@ -11,6 +11,12 @@
       @click="load('demo2.json')"
     >
       デモ2
+    </button>
+    <button
+      type="button"
+      @click="load('demo3.json')"
+    >
+      デモ3
     </button>
     <div v-if="isLoading">loading</div>
   </div>
@@ -35,9 +41,12 @@ const load = (fileName) => {
     })
 }
 
-if (window?.location) {
+onMounted(() => {
   setTimeout(() => {
+    if (!window.sprites || window.sprites.length) {
+      return
+    }
     load('demo1.json')
-  }, 1000)
-}
+  }, 100)
+})
 </script>

@@ -41,6 +41,19 @@
             </div>
           </dd>
         </div>
+        <div>
+          <dt>背景色</dt>
+          <dd>
+            <div class="input-with-title">
+              <div/>
+              <textarea
+                v-model="settings.memo"
+                class="mt-1 w-full border-b"
+                style="field-sizing: content"
+              />
+            </div>
+          </dd>
+        </div>
       </dl>
     </div>
   </div>
