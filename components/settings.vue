@@ -42,7 +42,7 @@
           </dd>
         </div>
         <div>
-          <dt>背景色</dt>
+          <dt>メモ</dt>
           <dd>
             <div class="input-with-title">
               <div/>
