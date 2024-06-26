@@ -18,11 +18,13 @@
       <div v-show="videoSrc">
         <p class="text-sm">▼ 右クリックから動画を保存できます</p>
         <video controls :src="videoSrc" />
-        <div class="mt-2 text-sm">
-          <a :href="videoSrc" target="_blank">
-            ▶︎ 動画を別タブで開く
-          </a>
-        </div>
+        <button
+          class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2  w-full"
+          type="button"
+          @click="download"
+        >
+          ダウンロード
+        </button>
       </div>
       <p v-if="!videoSrc" class="text-gray-500">
         ここに動画が表示されます
@@ -123,5 +125,12 @@ const generateVideo = async (ffmpeg, fps, images, ffmpegRunningOptions = []) => 
 
   const data = await ffmpeg.readFile('output.mp4')
   return data
+}
+
+const download = () => {
+  const link = window.document.createElement('a')
+  link.href = videoSrc.value
+  link.download = `rhythm-movie-generator-${Date.now()}.mp4`
+  link.click()
 }
 </script>
