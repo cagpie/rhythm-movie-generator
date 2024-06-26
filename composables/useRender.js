@@ -6,7 +6,7 @@ const { parts } = useParts()
 const isFfmpegExecuting = ref(false)
 
 const renderFrame = (timing) => {
-  parts.value.forEach((part) => {
+  parts.value.forEach((part, idx) => {
     // nuxtに入れるとreactiveでぶっ壊れるのでglobal経由で取得
     const sprite = window.sprites.find(s => s.appUniqueKey === part.key)
 
@@ -17,7 +17,8 @@ const renderFrame = (timing) => {
     sprite.scale.y = applyExpression(['scale', 'y'], part, timing)
     sprite.anchor.x = part.anchor.x
     sprite.anchor.y = part.anchor.y
-    sprite.zIndex = part.zIndex
+    sprite.zIndex = 1000 - idx
+    sprite.alpha = part.alpha
     sprite.visible = part.visible
   })
 }

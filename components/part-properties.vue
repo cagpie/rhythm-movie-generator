@@ -31,7 +31,7 @@
       >
         <div>
           <dt>位置</dt>
-          <dd class="grid grid-cols-3 gap-2">
+          <dd class="grid grid-cols-2 gap-2">
             <div class="input-with-title">
               <div>X</div>
               <input v-model="part.position.x" type="number">
@@ -39,10 +39,6 @@
             <div class="input-with-title">
               <div>Y</div>
               <input v-model="part.position.y" type="number">
-            </div>
-            <div class="input-with-title">
-              <div>Z</div>
-              <input v-model="part.zIndex" type="number">
             </div>
           </dd>
         </div>
@@ -78,6 +74,15 @@
             <div class="input-with-title">
               <div/>
               <input v-model="part.rotation" type="number">
+            </div>
+          </dd>
+        </div>
+        <div>
+          <dt>透明度</dt>
+          <dd>
+            <div class="input-with-title">
+              <div/>
+              <input v-model="part.alpha" type="number">
             </div>
           </dd>
         </div>
