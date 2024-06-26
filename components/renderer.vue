@@ -18,6 +18,11 @@
       <div v-show="videoSrc">
         <p class="text-sm">▼ 右クリックから動画を保存できます</p>
         <video controls :src="videoSrc" />
+        <div class="mt-2 text-sm">
+          <a :href="videoSrc" target="_blank">
+            ▶︎ 動画を別タブで開く
+          </a>
+        </div>
       </div>
       <p v-if="!videoSrc" class="text-gray-500">
         ここに動画が表示されます
