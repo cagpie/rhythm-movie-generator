@@ -18,6 +18,12 @@
             <svgo-image-square />
           </button>
           <button
+            title="画像を保存"
+            @click="downloadImage"
+          >
+            <svgo-download />
+          </button>
+          <button
             title="パーツを削除"
             @click="removePart"
           >
@@ -185,6 +191,22 @@ onChange((files) => {
   }
   reader.readAsDataURL(fileData)
 })
+
+const downloadImage = () => {
+  const [, type, extention] = part.base64.match(/^data:([^/]+)\/([^;]+)/)
+
+  const byteString = atob(part.base64.split(',')[1])
+  const buffer = new Uint8Array(byteString.length)
+  for (let i = 0; i < byteString.length; i++) {
+    buffer[i] = byteString.charCodeAt(i)
+  }
+  const blob = new Blob([buffer.buffer], { type: `${type}/${extention}` })
+
+  const link = window.document.createElement('a')
+  link.href = URL.createObjectURL(blob)
+  link.download = `${part.name}.${extention}`
+  link.click()
+}
 
 const removePart = () => {
   if (!window.confirm(`パーツ ${part.name} を削除します`)) {
