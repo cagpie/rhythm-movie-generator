@@ -6,7 +6,7 @@ const settings = ref({
   fps: 30,
   bpm: 150,
   duration: 8,
-  backgroundColor: '0x003388',
+  backgroundColor: '0x0600de',
   memo: 'メモを書くことができるよ',
 })
 
