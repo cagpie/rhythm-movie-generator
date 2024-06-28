@@ -18,7 +18,7 @@ const renderFrame = (timing) => {
     sprite.anchor.x = part.anchor.x
     sprite.anchor.y = part.anchor.y
     sprite.zIndex = 1000 - idx
-    sprite.alpha = part.alpha
+    sprite.alpha = applyExpression(['alpha'], part, timing)
     sprite.visible = part.visible
   })
 }

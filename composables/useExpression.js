@@ -11,6 +11,7 @@ const expressions = [
     type: 'position-plus-sin',
     defaultOptions: JSON.stringify({ speed: 1, delay: 0, position: { x: 5, y: 20 } }),
     effects: {
+      alpha: null,
       rotation: null,
       position: {
         x: (value, timing, options) => {
@@ -31,6 +32,7 @@ const expressions = [
     type: 'position-plus-switch',
     defaultOptions: JSON.stringify({ speed: 1, delay: 0, position: { x: 5, y: 20 } }),
     effects: {
+      alpha: null,
       rotation: null,
       position: {
         x: (value, timing, options) => {
@@ -51,6 +53,7 @@ const expressions = [
     type: 'scale-plus-sin',
     defaultOptions: JSON.stringify({ speed: 1, delay: 0, scale: { x: 0.1, y: 0.1 } }),
     effects: {
+      alpha: null,
       rotation: null,
       position: {
         x: null,
@@ -71,6 +74,7 @@ const expressions = [
     type: 'scale-plus-switch',
     defaultOptions: JSON.stringify({ speed: 1, delay: 0, scale: { x: -2, y: 0.1 } }),
     effects: {
+      alpha: null,
       rotation: null,
       position: {
         x: null,
@@ -91,6 +95,7 @@ const expressions = [
     type: 'rotation',
     defaultOptions: JSON.stringify({ speed: 0.25, delay: 0, rotation: { direction: 1 } }),
     effects: {
+      alpha: null,
       rotation: (value, timing, options) => {
         return value + (processValue(options?.speed, 0.25) * (timing + processValue(options?.delay, 0)) * Math.PI * 2) * processValue(options?.rotation?.direction, 1)
       },
@@ -109,9 +114,29 @@ const expressions = [
     type: 'rotation-repetitive-sin',
     defaultOptions: JSON.stringify({ speed: 1, delay: 0, rotation: { angle: 0.1, direction: 1 } }),
     effects: {
+      alpha: null,
       rotation: (value, timing, options) => {
         return value + Math.sin(processValue(options?.speed, 1) * (timing + processValue(options?.delay, 0)) * Math.PI * 2) * processValue(options?.rotation?.angle, 1) * processValue(options?.rotation?.direction, 1)
       },
+      position: {
+        x: null,
+        y: null,
+      },
+      scale: {
+        x: null,
+        y: null,
+      },
+    },
+  },
+  {
+    name: '非表示-スイッチ',
+    type: 'alpha-switch',
+    defaultOptions: JSON.stringify({ speed: 1, duration: 1, start: 0, end: 0.5 }),
+    effects: {
+      alpha: (value, timing, options) => {
+        return processValue(options?.start, 0) <= ((processValue(options?.speed, 1) * timing) % processValue(options?.duration, 1)) && ((processValue(options?.speed, 1) * timing) % processValue(options?.duration, 1)) < processValue(options?.end, 0.5) ? 0 : value
+      },
+      rotation: null,
       position: {
         x: null,
         y: null,
