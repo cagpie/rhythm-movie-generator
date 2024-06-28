@@ -35,15 +35,15 @@ const load = (fileName) => {
     .then((response) => {
       return response.json()
     })
-    .then((json) => {
-      loadProject(json)
+    .then(async (json) => {
+      await loadProject(json)
       isLoading.value = false
     })
 }
 
 onMounted(() => {
   setTimeout(() => {
-    if (!window.sprites || window.sprites.length) {
+    if (!window.containers || window.containers.length) {
       return
     }
     load('demo1.json')

@@ -8,18 +8,19 @@ const isFfmpegExecuting = ref(false)
 const renderFrame = (timing) => {
   parts.value.forEach((part, idx) => {
     // nuxtに入れるとreactiveでぶっ壊れるのでglobal経由で取得
-    const sprite = window.sprites.find(s => s.appUniqueKey === part.key)
+    const container = window.containers.find(s => s.appUniqueKey === part.key)
+    const sprite = container.children[0]
 
-    sprite.x = applyExpression(['position', 'x'], part, timing)
-    sprite.y = applyExpression(['position', 'y'], part, timing)
-    sprite.rotation = applyExpression(['rotation'], part, timing)
-    sprite.scale.x = applyExpression(['scale', 'x'], part, timing)
-    sprite.scale.y = applyExpression(['scale', 'y'], part, timing)
+    container.x = applyExpression(['position', 'x'], part, timing)
+    container.y = applyExpression(['position', 'y'], part, timing)
+    container.rotation = applyExpression(['rotation'], part, timing)
+    container.scale.x = applyExpression(['scale', 'x'], part, timing)
+    container.scale.y = applyExpression(['scale', 'y'], part, timing)
+    container.alpha = applyExpression(['alpha'], part, timing)
+    container.visible = part.visible
+    container.zIndex = 1000 - idx
     sprite.anchor.x = part.anchor.x
     sprite.anchor.y = part.anchor.y
-    sprite.zIndex = 1000 - idx
-    sprite.alpha = applyExpression(['alpha'], part, timing)
-    sprite.visible = part.visible
   })
 }
 

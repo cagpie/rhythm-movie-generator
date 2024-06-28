@@ -21,11 +21,11 @@ const init = () => {
     }
 
     parts.value.forEach((part) => {
-      const sprite = window.sprites.find(s => s.appUniqueKey === part.key)
-      app.value.stage.removeChild(sprite)
+      const container = window.containers.find(s => s.appUniqueKey === part.key)
+      app.value.stage.removeChild(container)
     })
 
-    window.sprites = []
+    window.containers = []
     parts.value = []
   }
 }

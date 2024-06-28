@@ -43,8 +43,11 @@ onChange((files) => {
 
     image.onload = async () => {
       const key = Math.random().toString()
-      const sprite = new PIXI.Sprite(PIXI.Texture.from(image))
-      sprite.appUniqueKey = key
+
+      const container = new PIXI.Container()
+      const spr = new PIXI.Sprite(PIXI.Texture.from(image))
+      container.addChild(spr)
+      container.appUniqueKey = key
 
       parts.value.push({
         key: key,
@@ -52,6 +55,7 @@ onChange((files) => {
         base64: reader.result,
         listing: true,
         visible: true,
+        parentKey: null,
         position: {
           x: 300,
           y: 300,
@@ -70,9 +74,9 @@ onChange((files) => {
       })
 
       // Nuxtのreactiveの中に入れると壊れるのでグローバルに入れて扱う
-      window.sprites.push(sprite)
+      window.containers.push(container)
 
-      app.value.stage.addChild(sprite)
+      app.value.stage.addChild(container)
 
       isLoading.value = false
     }

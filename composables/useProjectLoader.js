@@ -4,7 +4,7 @@ const { app } = usePixi()
 const { parts } = useParts()
 const { settings } = useSettings()
 
-const loadProject = (json) => {
+const loadProject = async (json) => {
   if (json.version !== 'rythm-movie-generator-v1') {
     alert('対応していないバージョンのファイルです')
     return false
@@ -16,11 +16,11 @@ const loadProject = (json) => {
     }
 
     parts.value.forEach((part) => {
-      const sprite = window.sprites.find(s => s.appUniqueKey === part.key)
-      app.value.stage.removeChild(sprite)
+      const container = window.containers.find(s => s.appUniqueKey === part.key)
+      app.value.stage.removeChild(container)
     })
 
-    window.sprites = []
+    window.containers = []
     parts.value = []
   }
 
@@ -28,22 +28,49 @@ const loadProject = (json) => {
     settings.value[key] = json.settings[key]
   })
 
-  json.parts.forEach((part) => {
-    const image = new Image()
-    image.src = part.base64
+  await Promise.all(json.parts.map((part) => {
+    return new Promise((resolve) => {
+      const image = new Image()
+      image.src = part.base64
 
-    image.onload = async () => {
-      const key = part.key
-      const sprite = new PIXI.Sprite(PIXI.Texture.from(image))
-      sprite.appUniqueKey = key
+      image.onload = () => {
+        const key = part.key
 
-      parts.value.push(part)
+        const container = new PIXI.Container()
+        const spr = new PIXI.Sprite(PIXI.Texture.from(image))
+        container.addChild(spr)
 
-      // Nuxtのreactiveの中に入れると壊れるのでグローバルに入れて扱う
-      window.sprites.push(sprite)
+        container.appUniqueKey = key
 
-      app.value.stage.addChild(sprite)
+        parts.value.push(part)
+
+        // Nuxtのreactiveの中に入れると壊れるのでグローバルに入れて扱う
+        window.containers.push(container)
+
+        app.value.stage.addChild(container)
+
+        resolve()
+      }
+    })
+  }))
+
+  parts.value.forEach((part) => {
+    if (!part.parentKey) {
+      return
     }
+
+    const partSprite = window.containers.find(s => s.appUniqueKey === part.key)
+    const oldParentSprite = partSprite.parent
+    oldParentSprite.removeChild(partSprite)
+
+    const newParentSprite = (() => {
+      if (!part.parentKey) {
+        return app.value.stage
+      }
+      return window.containers.find(s => s.appUniqueKey === part.parentKey)
+    })()
+
+    newParentSprite.addChild(partSprite)
   })
 
   return true

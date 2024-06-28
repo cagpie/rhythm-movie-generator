@@ -35,6 +35,24 @@
       <dl
         class="mt-2 [&>div]:grid [&>div]:grid-cols-4 [&>div]:mt-1 [&>div>dt]:text-gray-500 [&>div>dd]:col-span-3"
       >
+      <div>
+          <dt>
+            親
+          </dt>
+          <dd>
+            <select
+              v-model="part.parentKey"
+              class="ml-2 w-full shrink grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"
+            >
+              <option value="">-</option>
+              <template v-for="p in parts">
+                <option v-if="p.key !== part.key" :key="p.type" :value="p.key">
+                  {{ p.name }}
+                </option>
+              </template>
+            </select>
+          </dd>
+        </div>
         <div>
           <dt>位置</dt>
           <dd class="grid grid-cols-2 gap-2">
@@ -145,6 +163,7 @@ const { part } = defineProps({
 
 const expressionsCount = ref(part.expressions.length)
 const { expressions } = useExpressions()
+const { app } = usePixi()
 const { parts } = useParts()
 
 const isLoading = ref(false)
@@ -152,6 +171,24 @@ const { open, onChange } = useFileDialog({
   accept: 'image.*',
   directory: false,
 })
+
+watch(() => part.parentKey, () => {
+  const partSprite = window.containers.find(s => s.appUniqueKey === part.key)
+  const oldParentSprite = partSprite.parent
+  oldParentSprite.removeChild(partSprite)
+
+  const newParentSprite = (() => {
+    if (!part.parentKey) {
+      return app.value.stage
+    }
+    return window.containers.find(s => s.appUniqueKey === part.parentKey)
+  })()
+
+  newParentSprite.addChild(partSprite)
+
+  part.position.x = part.position.x + oldParentSprite.x - newParentSprite.x
+  part.position.y = part.position.y + oldParentSprite.y - newParentSprite.y
+}, { immediate: false })
 
 const addExpression = () => {
   expressionsCount.value++
@@ -184,7 +221,7 @@ onChange((files) => {
       part.name = fileData.name
       part.base64 = reader.result
 
-      window.sprites.find(s => s.appUniqueKey === part.key).texture = texture
+      window.containers.find(s => s.appUniqueKey === part.key).texture = texture
 
       isLoading.value = false
     }
@@ -213,7 +250,7 @@ const removePart = () => {
     return
   }
 
-  const partSprite = window.sprites.find(s => s.appUniqueKey === part.key)
+  const partSprite = window.containers.find(s => s.appUniqueKey === part.key)
   partSprite.parent.removeChild(partSprite)
 
   parts.value = parts.value.filter(p => p.key !== part.key)

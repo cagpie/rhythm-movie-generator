@@ -26,7 +26,7 @@ onMounted(async () => {
   graphics.rect(0, 0, settings.value.width, settings.value.height)
   graphics.fill(settings.value.backgroundColor)
 
-  window.sprites = []
+  window.containers = []
   step()
 })
 

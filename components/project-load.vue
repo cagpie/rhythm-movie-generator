@@ -35,10 +35,10 @@ onChange((files) => {
   }
 
   const reader = new FileReader()
-  reader.onload = () => {
+  reader.onload = async () => {
     const json = JSON.parse(reader.result)
 
-    loadProject(json)
+    await loadProject(json)
 
     isLoading.value = false
   }
