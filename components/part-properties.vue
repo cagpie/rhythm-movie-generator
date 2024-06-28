@@ -42,7 +42,7 @@
           <dd>
             <select
               v-model="part.parentKey"
-              class="ml-2 w-full shrink grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"
+              class="w-full shrink grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"
             >
               <option value="">-</option>
               <template v-for="p in parts">
