@@ -10,7 +10,7 @@ import { Application, Graphics } from 'pixi.js'
 
 const canvasWrapper = ref(null)
 
-const { app, background } = usePixi()
+const { app, background, isInited } = usePixi()
 const { settings } = useSettings()
 const { isFfmpegExecuting, renderFrame } = useRender()
 
@@ -27,6 +27,11 @@ onMounted(async () => {
   graphics.fill(settings.value.backgroundColor)
 
   window.containers = []
+
+  setTimeout(() => {
+    isInited.value = true
+  }, 100)
+
   step()
 })
 
