@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js'
 const { app } = usePixi()
 const { parts } = useParts()
 const { settings } = useSettings()
+const { attachDraggable } = useDraggable()
 
 const loadProject = async (json) => {
   if (json.version !== 'rythm-movie-generator-v1') {
@@ -44,6 +45,9 @@ const loadProject = async (json) => {
 
         parts.value.push(part)
 
+        // reactiveになったpartを渡す
+        attachDraggable(parts.value.find(p => p.key === key), spr)
+
         // Nuxtのreactiveの中に入れると壊れるのでグローバルに入れて扱う
         window.containers.push(container)
 
@@ -54,6 +58,7 @@ const loadProject = async (json) => {
     })
   }))
 
+  // 親子関係を再構築
   parts.value.forEach((part) => {
     if (!part.parentKey) {
       return

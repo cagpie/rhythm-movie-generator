@@ -11,6 +11,7 @@ const renderFrame = (timing) => {
     const container = window.containers.find(s => s.appUniqueKey === part.key)
     const sprite = container.children[0]
 
+    // applyExpressionsの対象でないものはここで都度更新する必要ないのでパフォーマンス改善するときは改修すると良い
     container.x = applyExpression(['position', 'x'], part, timing)
     container.y = applyExpression(['position', 'y'], part, timing)
     container.rotation = applyExpression(['rotation'], part, timing)
@@ -21,6 +22,7 @@ const renderFrame = (timing) => {
     container.zIndex = 1000 - idx
     sprite.anchor.x = part.anchor.x
     sprite.anchor.y = part.anchor.y
+    sprite.interactive = part.draggable
   })
 }
 

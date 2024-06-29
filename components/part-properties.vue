@@ -54,7 +54,17 @@
           </dd>
         </div>
         <div>
-          <dt>位置</dt>
+          <dt>
+            位置
+            <button
+              title="掴んで移動のオンオフを切り替え"
+              class="text-black"
+              style="vertical-align: -4px;"
+              @click="switchDraggable"
+            >
+            <svgo-drag :style="`opacity: ${part.draggable ? '1' : '0.3' }`"/>
+          </button>
+          </dt>
           <dd class="grid grid-cols-2 gap-2">
             <div class="input-with-title">
               <div>X</div>
@@ -254,6 +264,10 @@ const removePart = () => {
   partSprite.parent.removeChild(partSprite)
 
   parts.value = parts.value.filter(p => p.key !== part.key)
+}
+
+const switchDraggable = () => {
+  part.draggable = !part.draggable
 }
 
 const switchVisible = () => {

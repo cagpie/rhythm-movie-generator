@@ -17,6 +17,7 @@ import { useFileDialog } from '@vueuse/core'
 
 const { app } = usePixi()
 const { parts } = useParts()
+const { attachDraggable } = useDraggable()
 
 const { open, onChange } = useFileDialog({
   accept: 'image.*',
@@ -53,6 +54,7 @@ onChange((files) => {
         key: key,
         name: fileData.name,
         base64: reader.result,
+        draggable: true,
         listing: true,
         visible: true,
         parentKey: null,
@@ -72,6 +74,9 @@ onChange((files) => {
         alpha: 1,
         expressions: [{ type: '', options: '{}', enabled: true }],
       })
+
+      // reactiveになったpartを渡す
+      attachDraggable(parts.value.find(p => p.key === key), spr)
 
       // Nuxtのreactiveの中に入れると壊れるのでグローバルに入れて扱う
       window.containers.push(container)
