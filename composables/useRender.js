@@ -19,10 +19,27 @@ const renderFrame = (timing) => {
     container.scale.y = applyExpression(['scale', 'y'], part, timing)
     container.alpha = applyExpression(['alpha'], part, timing)
     container.visible = part.visible
-    container.zIndex = 1000 - idx
-    sprite.anchor.x = part.anchor.x
-    sprite.anchor.y = part.anchor.y
+
     sprite.interactive = part.draggable
+
+    // [謎バグ-親子Container-zIndex-anchor] pixi.jsの謎バグ回避用
+    // 親子設定しているとanchorを更新をできなくしている。するとエラーを吐くため
+    // 親子関係を設定し、親のcontainerのzIndexよりも小さい値を子のcontainerのzIndexに設定すると、なぜかcontainer全体のanchorが設定不能になる。
+    // 設定値は引き継がれるので、anchorを設定したい場合は親子関係を解除すると操作は可能
+    if (
+      !parts.value.find(p => p.parentKey === part.key)
+      && !part.parentKey) {
+      sprite.anchor.x = part.anchor.x
+      sprite.anchor.y = part.anchor.y
+    }
+
+    if (part.parentKey) {
+      const parentPartIdx = parts.value.findIndex(p => p.key === part.parentKey)
+      container.zIndex = (parentPartIdx - idx)
+    }
+    else {
+      container.zIndex = 1000 - idx
+    }
   })
 }
 

@@ -43,6 +43,11 @@ const loadProject = async (json) => {
 
         container.appUniqueKey = key
 
+        // [謎バグ-親子Container-zIndex-anchor] pixi.jsの謎バグ回避用
+        // 親子関係をセットしてからだとanchorの設定反映を無効にしているので、ここでanchorのみセットする
+        spr.anchor.x = part.anchor.x
+        spr.anchor.y = part.anchor.y
+
         parts.value.push(part)
 
         // reactiveになったpartを渡す

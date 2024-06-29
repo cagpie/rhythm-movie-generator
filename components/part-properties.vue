@@ -46,7 +46,7 @@
             >
               <option value="">-</option>
               <template v-for="p in parts">
-                <option v-if="p.key !== part.key" :key="p.type" :value="p.key">
+                <option v-if="p.key !== part.key && p.parentKey !== part.key" :key="p.type" :value="p.key">
                   {{ p.name }}
                 </option>
               </template>
