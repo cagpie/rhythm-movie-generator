@@ -231,7 +231,7 @@ onChange((files) => {
       part.name = fileData.name
       part.base64 = reader.result
 
-      window.containers.find(s => s.appUniqueKey === part.key).texture = texture
+      window.containers.find(s => s.appUniqueKey === part.key).children[0].texture = texture
 
       isLoading.value = false
     }
